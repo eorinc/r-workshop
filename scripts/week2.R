@@ -1,5 +1,6 @@
 #change working directory
-setwd("/home/rstudio/r-workshop/data")
+setwd("/home/rstudio/r-workshop/data") #Linux
+#setwd("V:/Talbot/13_Code/R/r-workshop/data") #Windows
 
 #1 - using read.table----
 ##from disk
