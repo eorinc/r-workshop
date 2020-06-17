@@ -1,5 +1,5 @@
 #change working directory
-setwd("/home/rstudio/r-workshop/data") #Linux
+setwd("/home/rstudio/r-workshop/data")
 
 #load lake finder data
 lf1 <- read.table("lakefinderdata.csv", sep=",", header=T)
@@ -43,6 +43,22 @@ for (i in 1:nrow(lf1)){
   diff[i] <- lf1$elev.ft.NAVD88[i] - lf1$elev.ft.NGVD29[i]
 }
 
+#run time comparison----
+library(lubridate)
+
+#vectorized
+then <- now()
+diff <- lf1$elev.ft.NAVD88 - lf1$elev.ft.NGVD29
+difftime(now(), then)
+
+#for loop
+then <- now()
+diff <- vector()
+for (i in 1:nrow(lf1)){
+  diff[i] <- lf1$elev.ft.NAVD88[i] - lf1$elev.ft.NGVD29[i]
+}
+difftime(now(), then)
+
 #exercises----
 ## (a) calculate the difference between NGVD29 and NAVD88 and store it as a new column of lf1
 
@@ -76,5 +92,3 @@ for (i in 1:nrow(lf1)){
 
 
 ## (k) plot lat vs lon, lat vs diff, diff vs long...
-
-

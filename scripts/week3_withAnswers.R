@@ -43,6 +43,22 @@ for (i in 1:nrow(lf1)){
   diff[i] <- lf1$elev.ft.NAVD88[i] - lf1$elev.ft.NGVD29[i]
 }
 
+#run time comparison----
+library(lubridate)
+
+#vectorized
+then <- now()
+diff <- lf1$elev.ft.NAVD88 - lf1$elev.ft.NGVD29
+difftime(now(), then)
+
+#for loop
+then <- now()
+diff <- vector()
+for (i in 1:nrow(lf1)){
+  diff[i] <- lf1$elev.ft.NAVD88[i] - lf1$elev.ft.NGVD29[i]
+}
+difftime(now(), then)
+
 #exercises----
 ## (a) calculate the difference between NGVD29 and NAVD88 and store it as a new column of lf1
 lf1$diff <- lf1$elev.ft.NAVD88 - lf1$elev.ft.NGVD29
