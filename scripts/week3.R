@@ -66,7 +66,7 @@ difftime(now(), then)
 ## (b) determine the number of rows in the data frame lf1
 
 
-## (c) remove the data and elevation columns and store unique rows as a new data frame
+## (c) remove the date and elevation columns and store unique rows as a new data frame
 
 
 ## (d) examine the new data frame
