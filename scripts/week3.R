@@ -66,7 +66,7 @@ difftime(now(), then)
 ## (b) determine the number of rows in the data frame lf1
 
 
-## (c) remove the date and elevation columns and store unique rows as a new data frame
+## (c) remove the data and elevation columns and store unique rows as a new data frame
 
 
 ## (d) examine the new data frame
@@ -75,7 +75,7 @@ difftime(now(), then)
 ## (e) figure out why there are still duplicate rows and remove them
 
 
-# (f) remove the duplicate rows
+## (f) remove the duplicate rows
 
 
 ## (g) write a for loop to do the same thing as (a)
@@ -91,4 +91,5 @@ difftime(now(), then)
 ## (hint: first convert dowlknum to a factor)
 
 
-## (k) plot lat vs lon, lat vs diff, diff vs long...
+## (k) plot lat vs lon, lat vs diff, diff vs lon...
+

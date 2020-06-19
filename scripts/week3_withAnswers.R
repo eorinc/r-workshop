@@ -68,6 +68,7 @@ nrow(lf1)
 
 ## (c) remove the data and elevation columns and store unique rows as a new data frame
 lf2 <- lf1[,-c(2,6:7)]
+lf2 <- lf1[,!(names(lf1) %in% c("date", "elev.ft.NAVD88", "elev.ft.NGVD29"))]
 lf3 <- unique(lf2)
 
 ## (d) examine the new data frame
@@ -84,9 +85,9 @@ lf3$diff[1] == lf3$diff[2]
 
 # (f) remove the duplicate rows
 lf3$diff <- round(lf3$diff,3)
-lf3 <- unique(lf3)
-nrow(lf3)
-head(lf3)
+lf3 <- unique(lf4)
+nrow(lf4)
+head(lf4)
 
 ## (g) write a for loop to do the same thing as (a)
 lf1$diff <- NA #initialize a new column
@@ -95,19 +96,19 @@ for (i in 1:nrow(lf1)){
 }
 
 ## (h) plot the difference using the pw_basin_name as the x axis variable in a bar chart
-barplot(lf3$diff~lf3$pw_basin_name)
+barplot(lf4$diff~lf4$pw_basin_name)
 
 ## (i) figure out why it didn't work
-print(lf3$pw_basin_name) #note the duplicate lake names ("Unnamed")
+print(lf4$pw_basin_name) #note the duplicate lake names ("Unnamed")
 
 ## (j) use dowlknum instead (since it is unique)
 ## (hint: first convert dowlknum to a factor)
-lf3$dowlknum <- as.factor(as.character(lf3$dowlknum))
-barplot(lf3$diff~lf3$dowlknum, col=lf3$dowlknum)
-legend("bottom", legend=lf3$dowlknum, fill=lf3$dowlknum, ncol=4)
+lf4$dowlknum <- as.factor(as.character(lf4$dowlknum))
+barplot(lf4$diff~lf4$dowlknum, col=lf4$dowlknum)
+legend("bottom", legend=lf4$dowlknum, fill=lf4$dowlknum, ncol=4)
 
 ## (k) plot lat vs lon, lat vs diff, diff vs long...
-plot(lf3$Lat_DD~lf3$Lon_DD)
-plot(lf3$Lat_DD~lf3$diff)
-plot(lf3$diff~lf3$Lon_DD)
+plot(lf4$Lat_DD~lf4$Lon_DD)
+plot(lf4$Lat_DD~lf4$diff)
+plot(lf4$diff~lf4$Lon_DD)
 
