@@ -152,8 +152,9 @@ covid19 <- readRDS("COVID19_US_States_Data.rds")
 #(c) calculate some statistics for individual variables
 #(d) change the levels of some factors (example: change obama_win08 and obama_win12 so they are consistent)
 #(e) create a histogram or two
-#(f) make some plots
+#(f) make a plot and post it in #coding before next Wednesday
 
+#this will get you started (since we haven't covered plotting yet)
 library(ggplot2)
 ggplot(covid19, aes(x=date, y=positive_increase.norm, color=gay_policy)) +
   geom_smooth() +
