@@ -1,10 +1,14 @@
+library(tidyverse)
+library(lubridate)
+
 #working with strings----
-alphabet <- letters #letters a vector that is part of the base R library
+alphabet <- letters #letters is a "built-in constant" that is part of the base R library
+?letters
 length(alphabet)
 nchar(alphabet)
 
-ALPHABET <- toupper(alphabet)
-alphabet <- tolower(ALPHABET)
+ALPHABET <- str_to_upper(alphabet) #stringr function
+alphabet <- str_to_lower(ALPHABET) #stringr function
 
 abc <- "abc"
 length(abc)
@@ -12,8 +16,7 @@ nchar(abc)
 
 tebahpla <- rev(alphabet)
 
-#install.packages("stringr")
-library(stringr)
+#library(stringr) #loads with 'tidyverse'
 #https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf
 
 #change working directory
@@ -28,10 +31,10 @@ lakes <- unique(lf1$pw_basin_name)
 str_c(lakes, "Lake", sep=" ")
 
 #splitting
-str_split(lakes, " ")
+spl <- str_split(lakes, " ")
 
 #subsetting
-str_sub(lakes, 1, 5) 
+str_sub(lakes, 1, 5)
 str_sub(lakes, 1, -5)
 str_sub(lakes, -5, -1)
 str_subset(lakes, "Twin")
@@ -75,9 +78,7 @@ levels(lakes)[1] <- "Bass"
 levels(lakes)
 
 #see it in action
-#install.packages("ggplot2")
-library(ggplot2)
-
+#library(ggplot2) #loads with 'tidyverse'
 lf2 <- lf1
 lf2$pw_basin_name <- as.factor(lf2$pw_basin_name)
 
@@ -87,10 +88,14 @@ ggplot(lf2, aes(x=pw_basin_name, y=elev.ft.NGVD29)) +
 
 #add "Lake" to all lake names
 #strings
-lf1$pw_basin_name <- str_c(lf2$pw_basin_name, "Lake", sep=" ")
+lf1$pw_basin_name <- str_c(lf1$pw_basin_name, "Lake", sep=" ")
+
+ggplot(lf1, aes(x=pw_basin_name, y=elev.ft.NGVD29)) +
+  geom_boxplot() +
+  theme(axis.text.x = element_text(angle = 45, hjust=1))
 
 #factors
-levels(lf2$pw_basin_name) <- str_c(levels(lf2$pw_basin_name), "Lake", sep=" ")  
+levels(lf2$pw_basin_name) <- str_c(levels(lf2$pw_basin_name), "Lake", sep=" ")
 
 ggplot(lf2, aes(x=pw_basin_name, y=elev.ft.NGVD29)) +
   geom_boxplot() +
@@ -116,11 +121,10 @@ ggplot(lf2, aes(x=pw_basin_name, y=elev.ft.NGVD29)) +
 #note that the order of the factors doesn't change, but the order of the strings does
 
 #this chunk of code just creates some crappy data
-library(lubridate)
 lf1 <- subset(lf1, year(date) >= 2016)
-lf1a <- subset(lf1, round(lf1$elev.ft.NGVD29*100, 0) %% 2 == 0)
+lf1a <- subset(lf1, round(lf1$elev.ft.NGVD29*100, 0) %% 2 == 0) #side note about modular arithmetic
 lf1b <- subset(lf1, round(lf1$elev.ft.NGVD29*100, 0) %% 2 == 1)
-lf1b$pw_basin_name[lf1b$pw_basin_name == "Bass Lake"] <- "Bsas Lake"
+lf1b$pw_basin_name <- toupper(lf1b$pw_basin_name)
 
 lf3 <- rbind(lf1a, lf1b)
 lf3$pw_basin_name <- as.factor(lf3$pw_basin_name)
@@ -132,7 +136,19 @@ ggplot(lf3, aes(x=pw_basin_name, y=elev.ft.NGVD29)) +
 
 levels(lf3$pw_basin_name)
 
-levels(lf3$pw_basin_name)[4] <- "Bass Lake"
+#aside about string cases
+
+#UPPER CASE
+#lower case
+#Title Case
+#Sentence case
+#PascalCase
+#camelCase
+
+#convert all levels to Title Case
+levels(lf3$pw_basin_name) <- str_to_title(levels(lf3$pw_basin_name)) #stringr function
+
+levels(lf3$pw_basin_name)
 
 ggplot(lf3, aes(x=pw_basin_name, y=elev.ft.NGVD29)) +
   geom_boxplot() +
@@ -161,3 +177,4 @@ ggplot(covid19, aes(x=date, y=positive_increase.norm, color=gay_policy)) +
   xlab(NULL) +
   ylab("Daily increase in positive tests per 100,000 population (2010)") +
   scale_color_discrete(name="Gay Policy")
+
