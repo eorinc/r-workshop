@@ -60,24 +60,29 @@ lf1.tidy <- lf1 %>%
 print(lf1.tidy)
 
 #separate time-dependent observations
-lf1.tidy.tdep <- subset(lf1.tidy, !(variable %in% c("elev.ft.NGVD29", "elev.ft.NAVD88")))  
+lf1.tidy.tdep <- subset(lf1.tidy, (variable %in% c("elev.ft.NGVD29", "elev.ft.NAVD88")))  
 
-head(lf1.tidy.tdep)
+print(lf1.tidy.tdep)
 
 #separate time-independent observations
-lf1.tidy.tind <- subset(lf1.tidy, variable %in% c("elev.ft.NGVD29", "elev.ft.NAVD88"))
+lf1.tidy.tind <- subset(lf1.tidy, !(variable %in% c("elev.ft.NGVD29", "elev.ft.NAVD88")))
 lf1.tidy.tind <- lf1.tidy.tind[,names(lf1.tidy.tind) != "date"]
 lf1.tidy.tind <- unique(lf1.tidy.tind)
 
 #or combined into one line:
 lf1.tidy.tind <- unique(subset(lf1.tidy, variable %in% c("Lat_DD", "Lon_DD"))[,names(lf1.tidy) != "date"])
 
-head(lf1.tidy.tind)
+print(lf1.tidy.tind)
+
+#for a GIS friendly table, we can pivot wider:
+lf1.tidy.tind <- lf1.tidy.tind %>%
+  pivot_wider(names_from=variable, values_from=value)
+
+print(lf1.tidy.tind)
 
 #unite() and separate() are two other functions that are occasionally useful
-
 lf1.tidy.tdep <- lf1.tidy.tdep %>%
-  separate(date, c("year", "month", "mday"), sep="-")
+  separate(col=date, c("year", "month", "mday"), sep="-")
 
 head(lf1.tidy.tdep)
 
