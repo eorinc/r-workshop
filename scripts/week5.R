@@ -23,7 +23,8 @@ print(my.wintertime)
 #if your data has am/pm
 my.datetime <- "7/7/1977 7:07:07 pm"
 my.datetime <- as.POSIXct(my.datetime, format="%m/%d/%Y %I:%M:%S %p", tz="UTC") 
-unclass(my.datetime)
+class(my.datetime)
+print(my.datetime)
 
 #difftime
 my.datetime2 <- as.POSIXct("8/7/1977 7:07:07 pm", format="%m/%d/%Y %I:%M:%S %p", tz="UTC")
