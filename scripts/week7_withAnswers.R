@@ -146,6 +146,7 @@ covid19.tidy <- covid19 %>%
   mutate(test.month=month.abb[month(test.date)]) %>%
   group_by(state, election.year, election.winner, test.month) %>%
   summarize(mean.pos.inc=mean(positive_increase.norm)) %>%
+  filter(!(test.month %in% c("Jan", "Feb"))) %>%
   pivot_wider(names_from=test.month,
               values_from=mean.pos.inc) %>%
-  select(state, election.year, election.winner, Jan, Feb, Mar, Apr, May, Jun, Jul)
+  select(state, election.year, election.winner, Mar, Apr, May, Jun, Jul)
