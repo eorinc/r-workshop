@@ -25,6 +25,9 @@ lf2 <- lf1 %>%
 lf2 <- lf1 %>%
   select(dowlknum:pw_basin_name, contains("elev"))
 
+lf2 <- lf1 %>%
+  select(head(names(.), 2), tail(names(.), 2))
+
 ##by rows
 lf2 <- lf1 %>%
   filter(pw_basin_name %in% c("Louise", "Silver"))
